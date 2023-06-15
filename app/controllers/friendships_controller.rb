@@ -18,8 +18,7 @@ class FriendshipsController < ApplicationController
 
   def update
     @friendship = Friendship.find(params[:id])
-    if params[:approved]
-      @friendship.update(approved: true)
+    if @friendship.update(approved: true)
       flash[:notice] = 'Friendship Accepted!'
       redirect_to friendships_index_path
     else
