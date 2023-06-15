@@ -4,11 +4,22 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :friendships
   has_many :sent_friendships, class_name: 'Friendship', foreign_key: 'sender_id'
   has_many :received_friendships, class_name: 'Friendship', foreign_key: 'receiver_id'
 
   def friends
-    sent_friendships.where(approved: true).or(received_friendships.where(approved: true))
+    user_ids = sent_friendships.where(approved: true).or(received_friendships.where(approved: true)).pluck(:sender_id, :receiver_id).flatten.uniq
+    filtered_user_ids = user_ids.reject { |id| id === self.id }
+    User.where(id: filtered_user_ids)
+  end
+
+  def pending_friendship_invitations
+    received_friendships.where(approved: false)
+  end
+
+  def pending_friendship_requests
+    sent_friendships.where(approved: false)
   end
 
   # has_many :friendships, through: :sent_friendships, source: :receiver
@@ -16,10 +27,6 @@ class User < ApplicationRecord
   # has_many :inverse_friendships, ->(user) { where("sender_id = :user_id OR receiver_id = :user_id", user_id: user.id).where(status: 'accepted') },
   #          through: :received_friendships, source: :sender
   #
-  def pending_friendship_invitation
-    received_friendships.where(approved: false)
-  end
-
   # def all_friendships
   #   friendships.or(inverse_friendships)
   # end

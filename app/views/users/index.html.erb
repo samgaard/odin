@@ -11,7 +11,7 @@
     <% elsif @requests_received_ids.include?(user.id) %>
       - Friend Request Received 🙋🏻‍♂️
     <% elsif !@friend_ids.include?(user.id) %>
-      <%= link_to 'Send Friend Request', friendships_create_path(friend_id: user.id) %>
+      <%= link_to 'Send Friend Request', friendships_create_path(receiver_id: user.id) %>
     <% end %>
   <% end %>
   <br/>
