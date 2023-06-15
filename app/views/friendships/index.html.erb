@@ -5,7 +5,8 @@
 <% if @requests_received.length > 0 %>
   <h3>Received From 🙋🏻‍♂️</h3>
   <% @requests_received.each do |r| %>
-    <%= r.sender.name %> - received <%= r.created_at %> <br/>
+    <%= r.sender.name %> - received <%= r.created_at %>
+    <%= button_to 'Approve Request!', friendships_update_path(id: r.id) %> <br/>
   <% end %>
   <hr/>
 <% end %>
