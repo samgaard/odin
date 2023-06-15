@@ -1,13 +1,12 @@
 class FriendshipsController < ApplicationController
   def index
-    # @friendships = Friendship.where("(sender_id = :user_id OR receiver_id = :user_id) AND approved = true", user_id: current_user.id)
     @friends = current_user.friends
     @requests_sent = current_user.sent_friendships.where(approved: false)
     @requests_received = current_user.received_friendships.where(approved: false)
   end
 
   def create
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
+    @friendship = Friendship.create(sender_id: current_user.id, receiver_id: params[:receiver_id])
     if @friendship.save
       flash[:notice] = 'Friend Request Sent!'
       redirect_to friendships_index_path
