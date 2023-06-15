@@ -1,0 +1,28 @@
+<h1>Friendships</h1>
+
+
+<h2>Pending Friend Requests</h2>
+<% if @requests_received.length > 0 %>
+  <h3>Received 🙋🏻‍♂️</h3>
+  <% @requests_received.each do |r| %>
+    <%= r.user.name %> - received <%= r.created_at %>
+  <% end %>
+  <hr/>
+<% end %>
+
+
+<% if @requests_sent.length > 0 %>
+  <h3>Sent 📬</h3>
+  <% @requests_sent.each do |r| %>
+    <%= r.receiver.name %> - sent <%= r.created_at %>
+  <% end %>
+  <hr/>
+<% end %>
+
+
+<% if @friends.length > 0 %>
+  <h2>Friends 👩‍❤️‍👨</h2>
+  <% @friends.each do |r| %>
+    <%= r.name %>
+  <% end %>
+<% end %>

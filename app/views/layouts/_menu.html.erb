@@ -1,0 +1,70 @@
+<style>
+    #menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #menu li {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    #menu li a {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    #menu li a:hover {
+        background-color: #f0f0f0;
+    }
+
+    #menu li a.disabled {
+        pointer-events: none;
+        cursor: default;
+        color: gray;
+        text-decoration: none;
+    }
+
+    p.alert {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    p.notice {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+</style>
+<ul id="menu">
+  <li><a href="<%= users_index_path %>" class="<%= 'disabled' if request.path == users_index_path %>">Users</a></li>
+  <% if current_user %>
+    <li>
+      <a href="<%= friendships_index_path %>" class="<%= 'disabled' if request.path == friendships_index_path %>">
+        Friends
+      </a>
+    </li>
+    <li style="float: right;">
+      <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to 'Log In', new_user_session_path %>
+    </li>
+    <li>
+      <%= link_to 'Sign Up', new_user_registration_path %>
+    </li>
+  <% end %>
+</ul>
