@@ -8,6 +8,7 @@
     #menu li {
         display: inline-block;
         margin-right: 20px;
+        position: relative; /* Added for positioning the badge */
     }
 
     #menu li a {
@@ -28,6 +29,22 @@
         cursor: default;
         color: gray;
         text-decoration: none;
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        text-align: center;
+        color: white;
+        font-size: 8px;
+        font-weight: bold;
+        line-height: 10px;
+        font-family: sans-serif;
     }
 
     p.alert {
@@ -54,6 +71,9 @@
     <li>
       <a href="<%= friendships_index_path %>" class="<%= 'disabled' if request.path == friendships_index_path %>">
         Friends
+        <% if @friendship_invitations > 0 %>
+          <span class="notification-badge"><%= @friendship_invitations %></span>
+        <% end %>
       </a>
     </li>
     <li style="float: right;">
