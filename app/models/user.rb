@@ -4,9 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :friendships
   has_many :sent_friendships, class_name: 'Friendship', foreign_key: 'sender_id'
   has_many :received_friendships, class_name: 'Friendship', foreign_key: 'receiver_id'
+  has_many :posts, foreign_key: :author_id
 
   def friends
     user_ids = sent_friendships.where(approved: true).or(received_friendships.where(approved: true)).pluck(:sender_id, :receiver_id).flatten.uniq
