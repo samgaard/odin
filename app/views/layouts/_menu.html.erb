@@ -66,7 +66,13 @@
     }
 </style>
 <ul id="menu">
+  <li>
+    <a href="<%= root_path %>" class="<%= 'disabled' if request.path == root_path %>">
+      Home
+    </a>
+  </li>
   <li><a href="<%= users_index_path %>" class="<%= 'disabled' if request.path == users_index_path %>">Users</a></li>
+  <li><a href="<%= posts_path %>" class="<%= 'disabled' if request.path == posts_path %>">Posts</a></li>
   <% if current_user %>
     <li>
       <a href="<%= friendships_index_path %>" class="<%= 'disabled' if request.path == friendships_index_path %>">
