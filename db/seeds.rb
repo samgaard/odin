@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+Post.delete_all
+User.delete_all
+
 User.create(
   name: 'Sam',
   email: 'sam@hcp.com',
@@ -17,5 +20,19 @@ User.create(
     name: Faker::Superhero.name,
     email: Faker::Internet.email,
     password: 123456,
+  )
+end
+
+10.times do
+  Post.create(
+    author: User.all.sample,
+    body: Faker::Lorem.paragraph
+  )
+end
+
+10.times do
+  Like.create(
+    post: Post.all.sample,
+    friend: User.all.sample
   )
 end
