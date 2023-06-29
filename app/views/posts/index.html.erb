@@ -2,8 +2,22 @@
 
 <% @posts.each do |p| %>
   <ul>
-    <li>Author: <%= p.author.name %><br><%= p.body %></li>
+    <li>Author: <%= p.author.name %>
+      <br>
+      <%= p.body %>
+
+      <% if current_user.can_like(p) %>
+        <br>
+        <%= link_to 'Like!', likes_create_path(post_id: p.id, friend_id: current_user.id) %>
+      <% end %>
+
+      <% if p.likes.count > 0 %>
+        <br>
+        Likes: <%= p.likes.count %>
+      <% end %>
+    </li>
   </ul>
+
 <% end %>
 
 <%= link_to 'New Post', new_post_path %>

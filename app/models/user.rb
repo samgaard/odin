@@ -6,7 +6,8 @@ class User < ApplicationRecord
 
   has_many :sent_friendships, class_name: 'Friendship', foreign_key: 'sender_id'
   has_many :received_friendships, class_name: 'Friendship', foreign_key: 'receiver_id'
-  has_many :posts, foreign_key: :author_id
+  has_many :posts, foreign_key: :author_id, dependent: :destroy
+  has_many :likes, foreign_key: :friend_id
 
   def friends
     user_ids = sent_friendships.where(approved: true).or(received_friendships.where(approved: true)).pluck(:sender_id, :receiver_id).flatten.uniq
@@ -22,6 +23,10 @@ class User < ApplicationRecord
     sent_friendships.where(approved: false)
   end
 
+  def can_like(post)
+    !post.likes.map(&:friend_id).include?(id) && post.author.id != id
+  end
+
   # has_many :friendships, through: :sent_friendships, source: :receiver
   #
   # has_many :inverse_friendships, ->(user) { where("sender_id = :user_id OR receiver_id = :user_id", user_id: user.id).where(status: 'accepted') },
@@ -34,9 +39,10 @@ class User < ApplicationRecord
   # has_many :friendships, ->(user) { where("sender_id = :user_id OR receiver_id = :user_id", user_id: user.id) }
   # has_many :friends, through: :friendships
 
-  # def is_friend(friend_id)
-  #   friendships.exists?(friend_id: friend_id, approved: true)
-  # end
+  def is_friend(friend_id)
+    friends.exists?(id: friend_id)
+  end
+
   #
   # def sent_friend_request(friend_id)
   #   friendships.exists?(friend_id: friend_id, approved: false)

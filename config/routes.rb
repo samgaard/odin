@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'likes/new'
+  get 'likes/create'
+  get 'likes/destroy'
   resources :posts
   get 'friendships/index'
   get 'friendships/create'
