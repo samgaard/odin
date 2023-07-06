@@ -2,7 +2,10 @@
 
 <% @posts.each do |p| %>
   <ul>
-    <li>Author: <%= p.author.name %>
+    <li>
+      <%= link_to p.id, p %>
+      <br>
+      Author: <%= p.author.name %>
       <br>
       <%= p.body %>
 
@@ -14,6 +17,10 @@
       <% if p.likes.count > 0 %>
         <br>
         Likes: <%= p.likes.count %>
+      <% end %>
+      <% if p.comments.count > 0 %>
+        <br>
+        Comments: <%= p.comments.count %>
       <% end %>
     </li>
   </ul>

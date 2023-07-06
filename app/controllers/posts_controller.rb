@@ -21,6 +21,11 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  def show
+    @post = Post.find(params[:id])
+    @comment = @post.comments.build
+  end
+
   def update
   end
 
