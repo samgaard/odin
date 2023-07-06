@@ -7,6 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Post.delete_all
+Friendship.delete_all
 User.delete_all
 
 User.create(
@@ -21,6 +22,20 @@ User.create(
     email: Faker::Internet.email,
     password: 123456,
   )
+end
+
+20.times do
+  friend_1 = User.all.sample
+  remaining_users = User.all - [friend_1]
+  friend_2 = remaining_users.sample
+  friendship_exists = friend_1.is_friend(friend_2.id)
+  unless friendship_exists
+    Friendship.create(
+      sender_id: friend_1.id,
+      receiver_id: friend_2.id,
+      approved: [true, false].sample
+    )
+  end
 end
 
 10.times do
