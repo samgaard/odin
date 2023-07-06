@@ -51,3 +51,11 @@ end
     friend: User.all.sample
   )
 end
+
+10.times do
+  Comment.create(
+    post: Post.all.sample,
+    body: Faker::Lorem.paragraph,
+    user: User.all.sample
+  )
+end

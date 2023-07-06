@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   get 'likes/new'
   get 'likes/create'
   get 'likes/destroy'
-  resources :posts
+  resources :posts do
+    resources :comments, only: [:create]
+  end
+  resources :comments
   get 'friendships/index'
   get 'friendships/create'
   post 'friendships/update', to: 'friendships#update'
