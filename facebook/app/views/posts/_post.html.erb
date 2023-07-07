@@ -6,13 +6,6 @@
   <%= post.body %>
 
   <%= render 'likes/like', post: post %>
-
-  <% if post.likes.count > 0 %>
-    <br>
-    Likes: <%= post.likes.count %>
-  <% end %>
-  <% if post.comments.count > 0 %>
-    <br>
-    Comments: <%= post.comments.count %>
-  <% end %>
+  
+  <%= render 'stats', post: post %>
 </div>
