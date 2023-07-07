@@ -3,8 +3,8 @@
 <p><%= @post.body %></p>
 
 <h2>Comments</h2>
-<% @post.comments.each do |c| %>
-  <%= c.body %> <br>
-<% end %>
+<%= render partial: 'comments/comment', collection: @post.comments %>
+
 <hr>
+
 <%= render 'comments/form', post: @post %>
