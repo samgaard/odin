@@ -1,0 +1,21 @@
+<div class="post">
+  <%= link_to post.id, post %>
+  <br>
+  Author: <%= post.author.name %>
+  <br>
+  <%= post.body %>
+
+  <% if current_user.can_like(post) %>
+    <br>
+    <%= link_to 'Like!', likes_create_path(post_id: post.id, friend_id: current_user.id) %>
+  <% end %>
+
+  <% if post.likes.count > 0 %>
+    <br>
+    Likes: <%= post.likes.count %>
+  <% end %>
+  <% if post.comments.count > 0 %>
+    <br>
+    Comments: <%= post.comments.count %>
+  <% end %>
+</div>
