@@ -5,10 +5,7 @@
   <br>
   <%= post.body %>
 
-  <% if current_user.can_like(post) %>
-    <br>
-    <%= link_to 'Like!', likes_create_path(post_id: post.id, friend_id: current_user.id) %>
-  <% end %>
+  <%= render 'likes/like', post: post %>
 
   <% if post.likes.count > 0 %>
     <br>

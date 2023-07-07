@@ -1,0 +1,5 @@
+<% if current_user.can_like(post) %>
+  <div class="like-button">
+    <%= link_to 'Like!', likes_create_path(post_id: post.id, friend_id: current_user.id) %>
+  </div>
+<% end %>
