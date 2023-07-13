@@ -11,8 +11,14 @@ class User < ApplicationRecord
 
   def friends
     user_ids = sent_friendships.where(approved: true).or(received_friendships.where(approved: true)).pluck(:sender_id, :receiver_id).flatten.uniq
-    filtered_user_ids = user_ids.reject { |id| id === self.id }
+    filtered_user_ids = user_ids.reject { |id| id == self.id }
     User.where(id: filtered_user_ids)
+  end
+
+  def timeline_posts
+    Post
+      .where(author_id: id)
+      .or(Post.where(author_id: friends.pluck(:id)))
   end
 
   def pending_friendship_invitations
@@ -27,29 +33,7 @@ class User < ApplicationRecord
     !post.likes.map(&:friend_id).include?(id) && post.author.id != id
   end
 
-  # has_many :friendships, through: :sent_friendships, source: :receiver
-  #
-  # has_many :inverse_friendships, ->(user) { where("sender_id = :user_id OR receiver_id = :user_id", user_id: user.id).where(status: 'accepted') },
-  #          through: :received_friendships, source: :sender
-  #
-  # def all_friendships
-  #   friendships.or(inverse_friendships)
-  # end
-
-  # has_many :friendships, ->(user) { where("sender_id = :user_id OR receiver_id = :user_id", user_id: user.id) }
-  # has_many :friends, through: :friendships
-
   def is_friend(friend_id)
     friends.exists?(id: friend_id)
   end
-
-  #
-  # def sent_friend_request(friend_id)
-  #   friendships.exists?(friend_id: friend_id, approved: false)
-  # end
-  #
-  # def received_friend_request(friend_id)
-  #   friendship_exists = Friendship.where(user_id: friend_id, friend_id: self.id, approved: false)
-  #   friendship_exists.length > 0
-  # end
 end
