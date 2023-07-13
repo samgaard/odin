@@ -1,0 +1,11 @@
+<div class="post">
+  <%= link_to post.id, post %>
+  <br>
+  Author: <%= post.author.name %>
+  <br>
+  <%= post.body %>
+
+  <%= render 'likes/like', post: post %>
+  
+  <%= render 'stats', post: post %>
+</div>
