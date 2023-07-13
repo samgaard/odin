@@ -7,7 +7,7 @@ class FriendshipsController < ApplicationController
 
   def create
     @friendship = Friendship.new(sender_id: current_user.id, receiver_id: params[:receiver_id])
-    if @friendship.save
+    if @friendship.save!
       flash[:notice] = 'Friend Request Sent!'
       redirect_to friendships_index_path
     else

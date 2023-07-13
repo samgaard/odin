@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params.merge(user: current_user))
-    if @comment.save
+    if @comment.save!
       redirect_to post_path(@post)
     else
       flash[:warning] = 'Something Went Wrong :/'
