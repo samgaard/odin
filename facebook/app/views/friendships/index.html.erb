@@ -6,7 +6,7 @@
   <h3>Received From 🙋🏻‍♂️</h3>
   <% @requests_received.each do |r| %>
     <%= r.sender.name %> - received <%= r.created_at %>
-    <%= button_to 'Approve Request!', friendships_update_path(id: r.id) %> <br/>
+    <%= button_to 'Approve Request!', friendships_update_path(id: r.id), class: 'btn btn-outline-success' %> <br/>
   <% end %>
   <hr/>
 <% end %>
