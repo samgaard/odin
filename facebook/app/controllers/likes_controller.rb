@@ -2,7 +2,7 @@ class LikesController < ApplicationController
 
   def create
     @like = Like.new(like_params)
-    if @like.save
+    if @like.save!
       redirect_to posts_path
     else
       flash[:warning] = 'Something Went Wrong :/'

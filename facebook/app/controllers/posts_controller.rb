@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = current_user.timeline_posts
   end
 
   def new
@@ -9,7 +9,7 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    if @post.save
+    if @post.save!
       redirect_to posts_path
     else
       flash[:warning] = 'Something Went Wrong :/'
