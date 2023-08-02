@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+Comment.delete_all
+Like.delete_all
 Post.delete_all
 Friendship.delete_all
 User.delete_all
@@ -13,49 +15,50 @@ User.delete_all
 User.create(
   name: 'Sam',
   email: 'sam@hcp.com',
-  password: 123456
+  password: 123_456
 )
 
 10.times do
   User.create(
     name: Faker::Superhero.name,
     email: Faker::Internet.email,
-    password: 123456,
+    password: 123_456
+  )
+end
+
+50.times do
+  friend1 = User.all.sample
+  remaining_users = User.all - [friend1]
+  friend2 = remaining_users.sample
+  friendship_exists = friend1.is_friend(friend2.id)
+  next if friendship_exists
+
+  Friendship.create(
+    sender_id: friend1.id,
+    receiver_id: friend2.id,
+    approved: [true, false].sample
+  )
+end
+
+30.times do
+  Post.create(
+    author: User.all.sample,
+    body: Faker::ChuckNorris.fact,
+    created_at: Date.today - rand(10)
   )
 end
 
 20.times do
-  friend_1 = User.all.sample
-  remaining_users = User.all - [friend_1]
-  friend_2 = remaining_users.sample
-  friendship_exists = friend_1.is_friend(friend_2.id)
-  unless friendship_exists
-    Friendship.create(
-      sender_id: friend_1.id,
-      receiver_id: friend_2.id,
-      approved: [true, false].sample
-    )
-  end
-end
-
-10.times do
-  Post.create(
-    author: User.all.sample,
-    body: Faker::Lorem.paragraph
-  )
-end
-
-10.times do
   Like.create(
     post: Post.all.sample,
     friend: User.all.sample
   )
 end
 
-10.times do
+20.times do
   Comment.create(
     post: Post.all.sample,
-    body: Faker::Lorem.paragraph,
+    body: Faker::ChuckNorris.fact,
     user: User.all.sample
   )
 end

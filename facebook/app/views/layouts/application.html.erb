@@ -9,18 +9,25 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 </head>
-
 <body>
-<%= render "layouts/menu" %>
-<hr/>
+<div class="container">
 
-<% if notice %>
-  <p class="notice"><%= notice %></p>
-<% end %>
+  <%= render "layouts/menu" %>
 
-<% if alert %>
-  <p class="alert"><%= alert %></p>
-<% end %>
-<%= yield %>
+  <div class="container">
+    <% if notice %>
+      <div class="alert alert-primary" role="alert">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-danger" role="alert">
+        <%= alert %>
+      </div>
+    <% end %>
+    <%= yield %>
+  </div>
+</div>
 </body>
 </html>

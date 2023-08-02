@@ -1,8 +1,13 @@
-<% if post.likes.count > 0 %>
-  <br>
-  Likes: <%= post.likes.count %>
-<% end %>
-<% if post.comments.count > 0 %>
-  <br>
-  Comments: <%= post.comments.count %>
-<% end %>
+<div class="stats">
+  <span class="me-2">
+    <%= render 'likes/like', post: post %>
+    <%= post.likes.count %>
+  </span>
+  <span>
+  <%= link_to '💬', post_path(post), class: 'btn btn-sm btn-primary' %>
+    <%= post.comments.count %>
+  </span>
+</div>
+
+
+
