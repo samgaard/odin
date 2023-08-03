@@ -1,2 +1,7 @@
 <h1>User#show</h1>
-<p>Find me in app/views/user/show.html.erb</p>
+
+<%= image_tag @user.avatar, { width: 100 } if @user.avatar.attached? %>
+
+<% if @user.id == current_user.id %>
+  <br/> <%= link_to 'Edit my profile', edit_user_registration_path %>
+<% end %>

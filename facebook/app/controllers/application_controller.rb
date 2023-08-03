@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   private
 
   def friendship_invitations_check
-    return if !current_user
+    return unless current_user
+
     @friendship_invitations = current_user.pending_friendship_invitations.count
   end
 end

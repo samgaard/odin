@@ -28,10 +28,13 @@
           <a class="nav-link" aria-current="page" href="<%= root_path %>">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<%= users_index_path %>">Users</a>
+          <a class="nav-link" href="<%= users_path %>">Users</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<%= posts_path %>">Posts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= user_path(current_user) %>">Me</a>
         </li>
         <% if current_user %>
           <li class="nav-item" style="position: relative">
