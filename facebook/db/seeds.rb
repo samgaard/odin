@@ -19,11 +19,16 @@ User.create(
 )
 
 10.times do
-  User.create(
-    name: Faker::Superhero.name,
+  name = Faker::Superhero.name
+  name = Faker::Superhero.name while User.pluck(:name).include? name
+  user = User.create(
+    name: name,
     email: Faker::Internet.email,
     password: 123_456
   )
+  url = URI.parse(Faker::Avatar.image)
+  downloaded_image = URI.open(url)
+  user.avatar.attach(io: downloaded_image, filename: 'profile_pic.jpg')
 end
 
 50.times do
