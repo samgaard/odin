@@ -9,9 +9,8 @@ Rails.application.routes.draw do
   get 'friendships/index'
   get 'friendships/create'
   post 'friendships/update', to: 'friendships#update'
-  get 'users/show'
-  get 'users/index'
   devise_for :users
+  resources :users, only: %i[index show]
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
